@@ -24,12 +24,15 @@ import {
   remove,
   update,
 } from "firebase/database";
+import { MenuItem } from "@mui/material";
 
 import { db } from "../firebase";
 
 import StatsCards from "../components/StatsCards";
 import ExportExcel from "../components/ExportExcel";
 import AgentAssign from "../components/AgentAssign";
+
+
 
 const Leads = () => {
   const [leads, setLeads] = useState<any[]>([]);
@@ -58,9 +61,23 @@ const Leads = () => {
     remove(ref(db, `fibreLeads/${id}`));
   };
 
+  const [selectedMonth,setSelectedMonth] = useState(
+  new Date().getMonth()
+);
+
   const updateStatus = (id: string, status: string) => {
     update(ref(db, `fibreLeads/${id}`), { status });
   };
+
+  const monthlyLeads = leads.filter((lead)=>{
+
+  if(!lead.createdAt) return false;
+
+  const date = new Date(lead.createdAt);
+
+  return date.getMonth() === selectedMonth;
+
+});
 
   const filteredLeads = leads.filter((lead) =>
     `${lead.name} ${lead.surname} ${lead.email} ${lead.address} ${lead.contact}`
@@ -75,7 +92,7 @@ const Leads = () => {
 
 
         {/* 📊 STATS */}
-        <StatsCards leads={filteredLeads} />
+        <StatsCards leads={monthlyLeads} />
 
         {/* 📤 EXPORT BUTTON */}
         <Box sx={{ mt: 2 }}>
@@ -97,6 +114,59 @@ const Leads = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </Paper>
+
+        <Paper
+sx={{
+p:2,
+mt:2,
+display:"flex",
+alignItems:"center",
+gap:2
+}}
+>
+
+<Typography>
+Monthly Leads:
+</Typography>
+
+
+<TextField
+select
+value={selectedMonth}
+onChange={(e)=>setSelectedMonth(Number(e.target.value))}
+>
+
+{[
+"January",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December"
+
+].map((month,index)=>(
+
+<MenuItem key={month} value={index}>
+{month}
+</MenuItem>
+
+))}
+
+</TextField>
+
+
+<Typography fontWeight="bold">
+Total: {monthlyLeads.length}
+</Typography>
+
+
+</Paper>
 
         {/* LEADS GRID */}
         <Grid container spacing={3} sx={{ mt: 3 }}>
@@ -142,19 +212,55 @@ const Leads = () => {
                 </Box>
 
                 {/* STATUS BUTTONS */}
-                <Box sx={{ mt: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
-                  <Button size="small" onClick={() => updateStatus(lead.id, "Contacted")}>
-                    Contacted
-                  </Button>
+<Box sx={{ mt: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
 
-                  <Button size="small" onClick={() => updateStatus(lead.id, "Installed")}>
-                    Installed
-                  </Button>
+  <Button
+    size="small"
+    variant="contained"
+    onClick={() => updateStatus(lead.id, "Received")}
+  >
+    Received
+  </Button>
 
-                  <Button size="small" onClick={() => updateStatus(lead.id, "Cancelled")}>
-                    Cancel
-                  </Button>
-                </Box>
+
+  <Button
+    size="small"
+    variant="contained"
+    onClick={() => updateStatus(lead.id, "In Process")}
+  >
+    In Process
+  </Button>
+
+
+  <Button
+    size="small"
+    variant="contained"
+    onClick={() => updateStatus(lead.id, "Pending")}
+  >
+    Pending
+  </Button>
+
+
+  <Button
+    size="small"
+    variant="contained"
+    color="error"
+    onClick={() => updateStatus(lead.id, "Approved")}
+  >
+    Approved
+  </Button>
+
+
+  <Button
+    size="small"
+    variant="contained"
+    color="secondary"
+    onClick={() => updateStatus(lead.id, "Declined")}
+  >
+    Declined
+  </Button>
+
+</Box>
 
 
                 {/* ACTION BUTTONS */}
@@ -166,7 +272,7 @@ const Leads = () => {
 
     const message = `Hello ${lead.name},
 
-Your Fibre Application Status: ${lead.status || "New"}
+Your Fibre Application Status: ${lead.status || "Received"}
 
 Selected Package: ${lead.packagePlan || "N/A"}
 Price: ${lead.price || "N/A"}
