@@ -734,7 +734,7 @@ loading
 
 :
 
-"Start My FREE 14-Day Trial"
+"Submit OpenServe Free Trial Application"
 
 }
 
