@@ -601,6 +601,77 @@ label="I confirm that the information provided is correct and I agree to be cont
 
 <Grid item xs={12}>
 
+  <Grid item xs={12}>
+
+<motion.div
+whileHover={{scale:1.03}}
+whileTap={{scale:.97}}
+>
+
+<Button
+
+fullWidth
+
+size="large"
+
+variant="contained"
+
+disabled={!form.agree || loading}
+
+onClick={submitTrial}
+
+endIcon={<ArrowForward/>}
+
+sx={{
+
+height:65,
+
+fontSize:22,
+
+fontWeight:"bold",
+
+borderRadius:5,
+
+background:
+"linear-gradient(90deg,#0284c7,#2563eb,#4f46e5)",
+
+boxShadow:"0 15px 40px rgba(37,99,235,.45)",
+
+textTransform:"none",
+
+transition:".4s",
+
+"&:hover":{
+
+background:
+"linear-gradient(90deg,#0369a1,#1d4ed8,#4338ca)"
+
+}
+
+}}
+
+>
+
+{
+
+loading
+
+?
+
+"Submitting Your Application..."
+
+:
+
+"Submit Application"
+
+}
+
+</Button>
+
+</motion.div>
+
+</Grid>
+
 <Paper
 sx={{
 p:3,
@@ -673,76 +744,7 @@ No Hidden Costs During Trial Period
 
 </Grid>
 
-<Grid item xs={12}>
 
-<motion.div
-whileHover={{scale:1.03}}
-whileTap={{scale:.97}}
->
-
-<Button
-
-fullWidth
-
-size="large"
-
-variant="contained"
-
-disabled={!form.agree || loading}
-
-onClick={submitTrial}
-
-endIcon={<ArrowForward/>}
-
-sx={{
-
-height:65,
-
-fontSize:22,
-
-fontWeight:"bold",
-
-borderRadius:5,
-
-background:
-"linear-gradient(90deg,#0284c7,#2563eb,#4f46e5)",
-
-boxShadow:"0 15px 40px rgba(37,99,235,.45)",
-
-textTransform:"none",
-
-transition:".4s",
-
-"&:hover":{
-
-background:
-"linear-gradient(90deg,#0369a1,#1d4ed8,#4338ca)"
-
-}
-
-}}
-
->
-
-{
-
-loading
-
-?
-
-"Submitting Your Application..."
-
-:
-
-"Submit OpenServe Free Trial Application"
-
-}
-
-</Button>
-
-</motion.div>
-
-</Grid>
 
 </Grid>
 
