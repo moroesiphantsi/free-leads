@@ -8,20 +8,45 @@ import Agents from "./pages/Agents";
 import AdminLogin from "./pages/AdminLogin";
 import AdminSignUp from "./pages/AdminSignUp";
 import LeadDetails from "./pages/LeadDetails";
+import FieldUpdates from "./pages/FieldUpdates";
+import FreeTrial from "./pages/FreeTrial";
+import ContractFibreLeads from "./pages/ContractFibreLeads";
+import AdminFreeTrial from "./pages/AdminFreeTrial";
+import AdminContractFibreLeads from "./pages/AdminContractFibreLeads";
+
+
+
+
+
+
+
 
 function App() {
   return (
     <Routes>
 
       {/* 🌍 PUBLIC ROUTES */}
-      <Route path="/" element={<AdminLogin />} />
+      <Route path="/" element={<FreeTrial />} />
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/admin/signup" element={<AdminSignUp />} />
       <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/free/trial" element={<AdminFreeTrial />} />
+      <Route path="/admin/contractfibreleads" element={<AdminContractFibreLeads />} />
+
+
+
+      <Route path="/user/free-trial" element={<FreeTrial />} />
+      <Route path="/user/contractfibreleads" element={<ContractFibreLeads />} />
+      <Route path="/user/field-updates" element={<FieldUpdates/>}/>
+      
+
+
 <Route
      path="/admin/leads"
         element={<Leads />}
       />
+      
 
       {/* 👤 SINGLE LEAD DETAILS (NEW CRM FEATURE) */}
       <Route
